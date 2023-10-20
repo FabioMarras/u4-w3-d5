@@ -6,6 +6,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "libri")
+@NamedQueries({@NamedQuery(name = "Libro.FindForYear",
+        query = "SELECT l FROM Libro l WHERE l.year = :year")})
 public class Libro {
     @Id
     @GeneratedValue

@@ -10,6 +10,7 @@ import fabiomarras.javaClass.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -152,6 +153,14 @@ public class Application {
             //RICERCA PRESTITI SCADUTI IN GENERALE
             pd.findPrestitiScaduto().forEach(System.out::println);
 
+            //NAMEDQUERIES RIGUARDANTE UNA RICERCA PER ANNO
+            TypedQuery<Libro> getAllQuery = em.createNamedQuery("Libro.FindForYear", Libro.class);
+            getAllQuery.setParameter("year", 1530);
+
+            List<Libro> result = getAllQuery.getResultList();
+
+            System.out.println("Ecco i libri dell'anno: " + 1530 + " da te richiesto: ");
+            result.forEach(System.out::println);
 
         } catch (Exception ex){
             System.err.println(ex.getMessage());
