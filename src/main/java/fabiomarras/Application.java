@@ -1,34 +1,47 @@
 package fabiomarras;
 
 import com.github.javafaker.Faker;
+import fabiomarras.fileDAO.LibroDAO;
+import fabiomarras.fileDAO.RivisteDAO;
 import fabiomarras.javaClass.Libro;
+import fabiomarras.javaClass.Riviste;
+import fabiomarras.javaClass.periodicità;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.function.Supplier;
+
 
 public class Application {
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("u4w3d5");
-
 
     public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        System.out.println("Hello World!");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("u4w3d5");
 
-        Supplier<Libro> booksSupplier = () -> {
+        EntityManager em = emf.createEntityManager();
+        try {
+            LibroDAO ld = new LibroDAO(em);
+            RivisteDAO rd = new RivisteDAO(em);
+
             Faker faker = new Faker(Locale.ITALY);
             Random rndm = new Random();
-            return new Libro(faker.book().title(), rndm.nextInt(2000, 2024), rndm.nextInt(0, 100), faker.book().author(), faker.book().genre());
-        };
-        List<Libro> libri = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            libri.add(booksSupplier.get());
+            Libro nuovoLibro = new Libro(faker.book().title(), rndm.nextInt(1000, 2024), rndm.nextInt(0, 100), faker.book().author(), faker.book().genre());;
+            //SALVIAMO UN NUOVO LIBRO
+            nuovoLibro = em.merge(nuovoLibro);
+            //ld.save(nuovoLibro);
+
+            //SALVIAMO UNA NUOVA RIVISTA
+            Riviste nuovaRivista = new Riviste(faker.lorem().word(), rndm.nextInt(1000, 2024), rndm.nextInt(0, 100), periodicità.SEMESTRALE);
+            nuovaRivista = em.merge(nuovaRivista);
+            //rd.save(nuovaRivista);
+
+
+        } catch (Exception ex){
+            System.err.println(ex.getMessage());
+        } finally {
+            em.close();
+            emf.close();
         }
-        libri.forEach(System.out::println);
     }
 }
