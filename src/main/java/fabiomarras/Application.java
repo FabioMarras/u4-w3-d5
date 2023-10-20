@@ -127,7 +127,22 @@ public class Application {
             //ld.findByIdAndDelete(78); // QUESTO è descritto in UtenteDAO
             //rd.findByIdAndDelete(78);
 
-            
+            //RICERCA PER ISBN
+            Libro findLibro = ld.findById(68);
+            if (findLibro != null) {
+                System.out.println(findLibro);
+            } else {
+                System.out.println("non ho trovato niente");
+            } // POSSIAMO RICERCARE PER ISBN E INSERIRE UN IF-ELSE PER AVERE UN MAGGIOR CONTROLLO
+
+            //RICERCA PER ANNO
+            ld.findLibriPerYear(1710).forEach(System.out::println);
+
+            //RICERCA PER AUTORE
+            ld.findLibriPerAuthor("Adriano Parisi").forEach(System.out::println);
+
+            //RICERCA PER TITOLO O PARTE DI ESSO
+            ld.findLibriPerTitle("the").forEach(System.out::println);
 
 
         } catch (Exception ex){
