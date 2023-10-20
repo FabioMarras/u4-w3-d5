@@ -37,10 +37,12 @@ public class Prestito {
     public Prestito(){}
 
 
-    public Prestito(LocalDate inizioPrestito, LocalDate previstoFinePrestito, LocalDate finePrestito, Set<Utente> utente) {
+    public Prestito(LocalDate inizioPrestito, LocalDate previstoFinePrestito, LocalDate finePrestito, Set<Libro> libro, Set<Riviste> riviste, Set<Utente> utente) {
         this.inizioPrestito = inizioPrestito;
         this.previstoFinePrestito = previstoFinePrestito;
         this.finePrestito = finePrestito;
+        this.libro = libro;
+        this.riviste = riviste;
         this.utente = utente;
     }
 

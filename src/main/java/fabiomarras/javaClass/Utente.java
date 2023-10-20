@@ -38,7 +38,6 @@ public class Utente {
                 ", nome='" + nome + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
-                ", prestito=" + prestito +
                 '}';
     }
 }
