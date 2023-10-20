@@ -5,6 +5,8 @@ import fabiomarras.javaClass.Riviste;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 
 public class RivisteDAO {
@@ -25,6 +27,22 @@ public class RivisteDAO {
     //METODO FIND per codISBN
     public Riviste findById(int id){
         return em.find(Riviste.class, id);
+    }
+
+    //METODO FIND per anno
+    public List<Riviste> findRivistePerYear(int year) {
+        TypedQuery<Riviste> getAllQuery = em.createQuery("SELECT r FROM Riviste r WHERE r.year = :year", Riviste.class);
+        List<Riviste> result = getAllQuery.setParameter("year", year).getResultList();
+        System.out.println("Ecco le riviste del relativo anno: ");
+        return getAllQuery.getResultList();
+    }
+
+    //FIND PER TITOLO
+    public List<Riviste> findRivistePerTitle(String title) {
+        TypedQuery<Riviste> getAllQuery = em.createQuery("SELECT r FROM Riviste r WHERE r.title LIKE CONCAT ('%', :title , '%')", Riviste.class);
+        List<Riviste> result = getAllQuery.setParameter("title", title).getResultList();
+        System.out.println("Ecco le riviste che contengono la parola da te scritta: ");
+        return getAllQuery.getResultList();
     }
 
     //METODO DELETE per eliminare tramite codISBN

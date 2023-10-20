@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "prestiti")
+//Non ho trovato un gran senso nel creare un Inheritance
 public class Prestito {
 
     @Id

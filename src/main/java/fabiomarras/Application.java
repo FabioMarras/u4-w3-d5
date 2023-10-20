@@ -66,7 +66,6 @@ public class Application {
             Set<Utente> utenti = new HashSet<>();
             utenti.add(findUtente1);
 
-
             //CERCHIAMO UN LIBRO
             Libro findLibro1 = ld.findById(68);
             Libro findLibro2 = ld.findById(70);
@@ -140,12 +139,14 @@ public class Application {
 
             //RICERCA PER ANNO
             ld.findLibriPerYear(1710).forEach(System.out::println);
+            rd.findRivistePerYear(1984).forEach(System.out::println);
 
             //RICERCA PER AUTORE
             ld.findLibriPerAuthor("Adriano Parisi").forEach(System.out::println);
 
             //RICERCA PER TITOLO O PARTE DI ESSO
             ld.findLibriPerTitle("the").forEach(System.out::println);
+            rd.findRivistePerTitle("e").forEach(System.out::println);
 
             //RICERCA ELEMENTI ATTUALMENTE IN PRESTITO CON UN NUMERO DI TESSERA PRECISO
             pd.findPrestitiScadutoUtente(UUID.fromString("10cba43c-d7bf-4619-ae28-07d244fc6621")).forEach(System.out::println);
