@@ -2,6 +2,7 @@ package fabiomarras.javaClass;
 
 import javax.persistence.*;
 import java.util.Random;
+import java.util.Set;
 
 @Entity
 @Table(name = "riviste")
@@ -16,13 +17,16 @@ public class Riviste {
     @Enumerated(EnumType.STRING)
     private periodicità periodicitàEnum;
 
+    @ManyToMany
+    @JoinTable(name = "prestito_riviste", joinColumns = @JoinColumn(name = "riviste_id"),
+            inverseJoinColumns = @JoinColumn(name = "prestito_id"))
+    private Set<Prestito> prestito;
 
     public Riviste() {
     }
-    Random rndm = new Random();
+
 
     public Riviste(String title, int year, int numPage, periodicità periodicitàEnum) {
-        this.codISBN = rndm.nextInt(1000, 9900000);
         this.title = title;
         this.year = year;
         this.numPage = numPage;

@@ -1,10 +1,8 @@
 package fabiomarras.javaClass;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Random;
+import java.util.Set;
 
 @Entity
 @Table(name = "libri")
@@ -17,13 +15,16 @@ public class Libro {
     private int numPage;
     private String author;
     private String type;
-    Random rndm = new Random();
+
+    @ManyToMany
+    @JoinTable(name = "prestito_libro", joinColumns = @JoinColumn(name = "libro_id"),
+            inverseJoinColumns = @JoinColumn(name = "prestito_id"))
+    private Set<Prestito> prestito;
 
     public Libro() {
     }
 
     public Libro(String title, int year, int numPage, String author, String type) {
-        this.codISBN = rndm.nextInt(1000, 9900000);
         this.title = title;
         this.year = year;
         this.numPage = numPage;
@@ -91,11 +92,4 @@ public class Libro {
         this.type = type;
     }
 
-    public Random getRndm() {
-        return rndm;
-    }
-
-    public void setRndm(Random rndm) {
-        this.rndm = rndm;
-    }
 }
