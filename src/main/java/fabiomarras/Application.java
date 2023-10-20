@@ -53,12 +53,14 @@ public class Application {
             }*/
 
             //CERCHIAMO UN UTENTE
-            Utente findUtente1 = ud.findById(UUID.fromString("10cba43c-d7bf-4619-ae28-07d244fc6621"));
+            Utente findUtente1 = ud.findById(UUID.fromString("231bedff-61fa-46b4-8edd-122bad570aac"));
             if (findUtente1 != null) {
                 System.out.println(findUtente1);
             } else {
                 System.out.println("non ho trovato niente");
             }
+            Set<Utente> utenti2 = new HashSet<>();
+            utenti2.add(findUtente1);
 
             Set<Utente> utenti = new HashSet<>();
             utenti.add(findUtente1);
@@ -109,7 +111,7 @@ public class Application {
             prestito1 = em.merge(prestito1);
             //pd.save(prestito1);
 
-            Prestito prestito2 = new Prestito(LocalDate.now(), finePrestito,null, libri2 , riviste, utenti);
+            Prestito prestito2 = new Prestito(LocalDate.of(2023, 03,10), LocalDate.of(2023,04,10),LocalDate.now(), libri2 , riviste, utenti2);
             prestito2 = em.merge(prestito2);
             //pd.save(prestito2);
 
@@ -143,6 +145,12 @@ public class Application {
 
             //RICERCA PER TITOLO O PARTE DI ESSO
             ld.findLibriPerTitle("the").forEach(System.out::println);
+
+            //RICERCA ELEMENTI ATTUALMENTE IN PRESTITO CON UN NUMERO DI TESSERA PRECISO
+            pd.findPrestitiScadutoUtente(UUID.fromString("10cba43c-d7bf-4619-ae28-07d244fc6621")).forEach(System.out::println);
+
+            //RICERCA PRESTITI SCADUTI IN GENERALE
+            pd.findPrestitiScaduto().forEach(System.out::println);
 
 
         } catch (Exception ex){
